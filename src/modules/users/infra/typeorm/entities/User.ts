@@ -12,9 +12,6 @@ export default class User {
     email: string;
 
     @Column()
-    role: string;
-
-    @Column()
     password: string;
 
     @CreateDateColumn()
