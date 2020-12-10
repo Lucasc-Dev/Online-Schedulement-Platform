@@ -1,3 +1,4 @@
+import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 import IUsersRepository from "../repositories/IUsersRepository";
 
 interface Request {
@@ -7,11 +8,10 @@ interface Request {
 }
 
 export default class CreateUserService {
-    private usersRepository;
-
-    constructor(usersRepository: IUsersRepository) {
-        this.usersRepository = usersRepository;
-    }
+    constructor(
+        private usersRepository: IUsersRepository,
+        private hashProvider: IHashProvider,
+    ) {}
 
     public async execute({ name, email, password }: Request): Promise<object> {
         const findEmail = await this.usersRepository.findByEmail(email);
@@ -20,7 +20,9 @@ export default class CreateUserService {
             throw new Error('Email already registred');
         }
 
-        const user = await this.usersRepository.create({ name, email, password });
+        const hashedPassword = await this.hashProvider.generateHash(password);
+
+        const user = await this.usersRepository.create({ name, email, password: hashedPassword });
 
         return user;
     }
