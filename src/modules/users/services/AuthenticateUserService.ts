@@ -1,4 +1,5 @@
 import authConfig from '@config/auth';
+import AppError from '@shared/errors/AppError';
 
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from "../repositories/IUsersRepository";
@@ -26,12 +27,12 @@ export default class AuthenticateUserService {
         const user = await this.usersRepository.findByEmail(email);
 
         if (!user) {
-            throw new Error('Wrong email/password combination.');
+            throw new AppError('Wrong email/password combination.');
         }
         const comparePassword = await this.hashProvider.compareHash(password, user.password);
         
         if (!comparePassword) {
-            throw new Error('Wrong email/password combination.');
+            throw new AppError('Wrong email/password combination.');
         }
         
         const { secret, expiresIn } = authConfig.jwt;

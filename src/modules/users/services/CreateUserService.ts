@@ -1,3 +1,5 @@
+import AppError from "@shared/errors/AppError";
+
 import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 import IUsersRepository from "../repositories/IUsersRepository";
 
@@ -17,7 +19,7 @@ export default class CreateUserService {
         const findEmail = await this.usersRepository.findByEmail(email);
 
         if (findEmail) {
-            throw new Error('Email already registred');
+            throw new AppError('Email already registred');
         }
 
         const hashedPassword = await this.hashProvider.generateHash(password);
