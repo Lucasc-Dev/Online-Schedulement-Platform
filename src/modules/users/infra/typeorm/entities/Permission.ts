@@ -1,4 +1,4 @@
-import { Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 
 import Role from './Role';
 
@@ -6,6 +6,9 @@ import Role from './Role';
 export default class Permission {
     @PrimaryGeneratedColumn('uuid')
     id: string;
+
+    @Column()
+    name: string;
 
     @ManyToMany(type => Role)
     @JoinTable({ name: 'permissions_roles' })
