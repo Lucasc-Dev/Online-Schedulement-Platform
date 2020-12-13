@@ -1,5 +1,6 @@
-import authConfig from '@config/auth';
+import { injectable, inject } from 'tsyringe';
 import AppError from '@shared/errors/AppError';
+import authConfig from '@config/auth';
 
 import IHashProvider from '../providers/HashProvider/models/IHashProvider';
 import IUsersRepository from "../repositories/IUsersRepository";
@@ -16,10 +17,16 @@ interface Response {
     token: string;
 }
 
+@injectable()
 export default class AuthenticateUserService {
     constructor(
+        @inject('UsersRepository')
         private usersRepository: IUsersRepository,
+        
+        @inject('HashProvider')
         private hashProvider: IHashProvider,
+
+        @inject('TokenProvider')
         private tokenProvider: ITokenProvider,
     ) {}
 
