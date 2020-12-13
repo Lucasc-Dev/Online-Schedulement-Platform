@@ -37,12 +37,14 @@ export default class CheckPermissionService {
             throw new AppError('Invalid JWT token');
         }
 
-        const containsPermission = user.roles.some(role => 
-            role.permissions.some(role_permission => role_permission.name === permission)  
-        );
-
-        if (!containsPermission) {
-            throw new AppError('Insufficient permissions');
+        if (permission) {
+            const containsPermission = user.roles.some(role => 
+                role.permissions.some(role_permission => role_permission.name === permission)  
+            );
+    
+            if (!containsPermission) {
+                throw new AppError('Insufficient permissions');
+            }
         }
 
         return { user, token };
