@@ -1,3 +1,4 @@
+import 'reflect-metadata';
 import 'dotenv/config';
 import 'express-async-errors';
 
@@ -5,9 +6,10 @@ import express from 'express';
 
 import routes from './routes';
 
-import '@shared/infra/typeorm';
-
 import ErrorHandler from '../middlewares/ErrorHandler';
+
+import '@shared/infra/typeorm';
+import '@shared/container';
 
 const app = express();
 
