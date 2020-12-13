@@ -9,5 +9,6 @@ const profilesController = new ProfilesController();
 const router = Router();
 
 router.get('/', permission(''), profilesController.show);
+router.put('/', permission(''), profilesController.update);
 
 export default router;
