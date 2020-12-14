@@ -2,7 +2,7 @@ import { Column, Entity, JoinTable, ManyToMany, PrimaryGeneratedColumn } from 't
 
 import Role from './Role';
 
-@Entity('roles')
+@Entity('permissions')
 export default class Permission {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -11,6 +11,14 @@ export default class Permission {
     name: string;
 
     @ManyToMany(type => Role)
-    @JoinTable({ name: 'permissions_roles' })
+    @JoinTable({ 
+        name: 'permissions_roles',
+        joinColumn: {
+            name: 'permission_id',
+        },
+        inverseJoinColumn: {
+            name: 'role_id',
+        }
+    })
     roles: Role[];
 }
