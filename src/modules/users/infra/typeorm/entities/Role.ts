@@ -10,7 +10,9 @@ export default class Role {
     @Column()
     name: string;
 
-    @ManyToMany(type => Permission)
+    @ManyToMany(type => Permission, { 
+        cascade: ['insert', 'update'] 
+    })
     @JoinTable({
         name: 'permissions_roles',
         joinColumn: {
