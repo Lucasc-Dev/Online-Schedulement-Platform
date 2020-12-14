@@ -3,8 +3,19 @@ import { container } from 'tsyringe';
 
 import CreateRoleService from '../../../services/CreateRoleService';
 import UpdateRoleService from "../../../services/UpdateRoleService";
+import ShowRoleService from "../../../services/ShowRoleService";
 
 export default class RolesController {
+    public async show(request: Request, response: Response): Promise<Response> {
+        const { role_id } = request.params;
+
+        const showRole = container.resolve(ShowRoleService);
+
+        const role = await showRole.execute({ id: role_id });
+
+        return response.json(role);
+    }
+
     public async create(request: Request, response: Response): Promise<Response> {
         const { name, permissions } = request.body;
 

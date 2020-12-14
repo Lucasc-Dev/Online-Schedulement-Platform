@@ -27,13 +27,13 @@ export default class RolesRepository implements IRolesRepository {
     }
 
     public async findById(id: string): Promise<Role | undefined> {
-        const role = await this.ormRepository.findOne(id);
+        const role = await this.ormRepository.findOne(id, { relations: ['permissions'] });
 
         return role;
     }
 
     public async findByName(name: string): Promise<Role | undefined> {
-        const role = await this.ormRepository.findOne({ where: { name } });
+        const role = await this.ormRepository.findOne({ where: { name }, relations: ['permissions'] });
 
         return role;
     }
