@@ -8,8 +8,8 @@ const rolesController = new RolesController();
 
 const router = Router();
 
-router.get('/:role_id', permission(''), rolesController.show);
-router.put('/:role_id', permission(''), rolesController.update);
-router.post('/', permission(''), rolesController.create);
+router.get('/:role_id', permission('ROLE_MANAGE'), rolesController.show);
+router.put('/:role_id', permission('ROLE_MANAGE'), rolesController.update);
+router.post('/', permission('ROLE_MANAGE'), rolesController.create);
 
 export default router;

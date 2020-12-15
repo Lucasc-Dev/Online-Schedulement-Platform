@@ -8,7 +8,7 @@ const profilesController = new ProfilesController();
 
 const router = Router();
 
-router.get('/', permission(''), profilesController.show);
-router.put('/', permission(''), profilesController.update);
+router.get('/', permission('PROFILE_MANAGE'), profilesController.show);
+router.put('/', permission('PROFILE_MANAGE'), profilesController.update);
 
 export default router;
