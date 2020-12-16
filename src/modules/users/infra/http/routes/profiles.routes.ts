@@ -10,5 +10,6 @@ const router = Router();
 
 router.get('/', permission('PROFILE_MANAGE'), profilesController.show);
 router.put('/', permission('PROFILE_MANAGE'), profilesController.update);
+router.delete('/', permission('PROFILE_MANAGE'), profilesController.delete);
 
 export default router;

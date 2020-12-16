@@ -1,3 +1,4 @@
+import DeleteUserService from "@modules/users/services/DeleteUserService";
 import { Request, Response } from "express";
 import { container } from 'tsyringe';
 
@@ -19,5 +20,15 @@ export default class ProfilesController {
         const newUser = await updateProfile.execute({ user, email, name, oldPassword, password });
         
         return response.json(newUser);
+    }
+
+    public async delete(request: Request, response: Response): Promise<Response> {
+        const { user } = request;
+
+        const deleteUser = container.resolve(DeleteUserService);
+
+        await deleteUser.execute({ user_id: user.id });
+
+        return response.status(204).send();
     }
 }
