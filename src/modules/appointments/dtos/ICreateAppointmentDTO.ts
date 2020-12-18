@@ -1,7 +1,9 @@
+import User from "@modules/users/infra/typeorm/entities/User";
+
 export default interface ICreateAppointmentDTO {
     status: string;
     reason: string;
-    date: string;
-    patient_id: string;
-    doctor_id: string;
+    date: Date;
+    patient: User;
+    doctor: User;
 }
