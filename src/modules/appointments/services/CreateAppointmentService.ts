@@ -10,7 +10,6 @@ import IAppointmentsRepository from '../repositories/IAppointmentsRepository';
 
 interface Request {
     patient: User;
-    status: string;
     reason: string;
     date: Date;
     doctor_id: string;
@@ -26,11 +25,15 @@ export default class CreateAppointmentService {
         private appointmentsRepository: IAppointmentsRepository,
     ) {}
 
-    public async execute({ reason, status, date, doctor_id, patient }: Request): Promise<Appointment> {
+    public async execute({ reason, date, doctor_id, patient }: Request): Promise<Appointment> {
         const doctor = await this.usersRepository.findById(doctor_id);
 
         if (!doctor) {
             throw new AppError('Doctor not found');
+        }
+
+        if (doctor.id === patient.id) {
+            throw new AppError('Doctor and patient cannot be the same')
         }
 
         const dateIsBeforeToday = isBefore(new Date(), date);
@@ -38,6 +41,8 @@ export default class CreateAppointmentService {
         if (dateIsBeforeToday) {
             throw new AppError('You can not make an appointment in the past');
         }
+
+        const status = 'Waiting payment';
 
         const appointment = await this.appointmentsRepository.create({
             reason, date, doctor, patient, status,
