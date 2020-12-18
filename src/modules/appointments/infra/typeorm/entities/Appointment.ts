@@ -3,7 +3,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('roles')
-export default class Role {
+export default class Appointment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
