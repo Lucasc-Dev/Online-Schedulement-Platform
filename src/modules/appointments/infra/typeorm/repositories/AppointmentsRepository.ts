@@ -23,4 +23,10 @@ export default class AppointmentsRepository implements IAppointmentsRepository {
     public async save(appointment: Appointment): Promise<void> {
         await this.ormRepository.save(appointment);
     }
+
+    public async findById(id: string): Promise<Appointment | undefined> {
+        const appointment = await this.ormRepository.findOne(id);
+
+        return appointment;
+    }
 }
