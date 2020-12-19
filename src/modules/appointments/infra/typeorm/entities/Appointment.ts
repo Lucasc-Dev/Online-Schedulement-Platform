@@ -2,7 +2,7 @@ import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGenerat
 
 import User from '@modules/users/infra/typeorm/entities/User';
 
-@Entity('roles')
+@Entity('appointments')
 export default class Appointment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
@@ -16,11 +16,17 @@ export default class Appointment {
     @Column()
     date: Date;
 
-    @ManyToOne(type => User)
+    @ManyToOne(type => User, { 
+        cascade: ['insert', 'update'], 
+        eager: true,
+    })
     @JoinColumn({ name: 'patient_id' })
     patient: User;
     
-    @ManyToOne(type => User)
+    @ManyToOne(type => User, { 
+        cascade: ['insert', 'update'],
+        eager: true,
+    })
     @JoinColumn({ name: 'doctor_id' })
     doctor: User;
 
